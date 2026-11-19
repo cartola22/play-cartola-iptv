@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10091f">
+<title>Play Cartola IPTV</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#10091f;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ padding:25px 18px;
+ background:#1b1030;
+ border-bottom:2px solid #8b35ff;
+}
+.logo{font-size:27px;font-weight:bold}
+.logo span{color:#a855ff}
+header p{color:#c9b6e8}
+main{padding:20px}
+h2{color:#d8b4fe}
+input{
+ width:100%;padding:15px;
+ border-radius:12px;
+ border:1px solid #7941ad;
+ background:#211532;color:white;
+ font-size:16px;
+}
+.categories{
+ display:flex;gap:10px;
+ overflow-x:auto;margin:20px 0;
+}
+button{
+ padding:12px 18px;
+ border:1px solid #9146e8;
+ border-radius:10px;
+ background:#28153e;
+ color:white;
+ font-weight:bold;
+}
+button.active{background:#8035d9}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:14px;
+}
+.card{
+ background:#211532;
+ border:1px solid #49276c;
+ border-radius:14px;
+ padding:20px 10px;
+ text-align:center;
+}
+.card .emoji{font-size:35px}
+.card h3{font-size:15px}
+.card p{color:#bba8d1;font-size:12px}
+footer{
+ text-align:center;
+ padding:30px 15px;
+ color:#a995bd;
+ font-size:12px;
+}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">PLAY <span>CARTOLA</span></div>
+ <p>Sua diversão começa aqui.</p>
+</header>
+<main>
+ <h2>Bem-vindo!</h2>
+ <input id="search" placeholder="Buscar conteúdo..." />
+ <h2>Explore</h2>
+ <div class="categories">
+  <button class="active" data-filter="Todos">Todos</button>
+  <button data-filter="Ao vivo">Ao vivo</button>
+  <button data-filter="Filmes">Filmes</button>
+  <button data-filter="Séries">Séries</button>
+ </div>
+ <div class="grid" id="catalog">
+  <div class="card" data-category="Ao vivo">
+   <div class="emoji">📺</div>
+   <h3>Ao vivo</h3>
+   <p>Conteúdos autorizados</p>
+  </div>
+  <div class="card" data-category="Filmes">
+   <div class="emoji">🎬</div>
+   <h3>Filmes</h3>
+   <p>Seu catálogo de filmes</p>
+  </div>
+  <div class="card" data-category="Séries">
+   <div class="emoji">🍿</div>
+   <h3>Séries</h3>
+   <p>Suas séries favoritas</p>
+  </div>
+  <div class="card" data-category="Todos">
+   <div class="emoji">⭐</div>
+   <h3>Destaques</h3>
+   <p>Novidades da plataforma</p>
+  </div>
+ </div>
+</main>
+<footer>
+ PLAY CARTOLA IPTV © 2026
+</footer>
+<script>
+const buttons=document.querySelectorAll('.categories button');
+const cards=document.querySelectorAll('.card');
+const search=document.getElementById('search');
+let category='Todos';
+
+function update(){
+ const term=search.value.toLowerCase();
+ cards.forEach(card=>{
+  const matchCategory=category==='Todos'||card.dataset.category===category;
+  const matchText=card.innerText.toLowerCase().includes(term);
+  card.style.display=matchCategory&&matchText?'block':'none';
+ });
+}
+buttons.forEach(button=>{
+ button.onclick=()=>{
+  buttons.forEach(b=>b.classList.remove('active'));
+  button.classList.add('active');
+  category=button.dataset.filter;
+  update();
+ };
+});
+search.addEventListener('input',update);
+</script>
+</body>
+</html>
